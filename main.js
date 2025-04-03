@@ -27,7 +27,9 @@ async function getChefBirthday(id) {
     throw new Error(`Non sono riuscito a recuperare lo chef con id: ${recipe.userId}`);
   }
 
-  return { birthDate: user.birthDate };
+  //Formattazione data
+  const formattedDate = dayjs(user.birthDate).format('DD/MM/YYYY');
+  return { birthDate: formattedDate };
 }
 
 // Esempio di utilizzo
