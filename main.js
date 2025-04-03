@@ -29,14 +29,14 @@ async function getChefBirthday(id) {
 
   //Formattazione data
   const formattedDate = dayjs(user.birthDate).format('DD/MM/YYYY');
-  return { birthDate: formattedDate };
+  return formattedDate;
 }
 
 // Esempio di utilizzo
 (async () => {
   try {
-    const birthDate = await getChefBirthday(1);
-    console.log(`data di nascita dello chef:`, birthDate);
+    const formattedDate = await getChefBirthday(1);
+    console.log(`data di nascita dello chef:`, formattedDate);
   } catch (error) {
     console.error('Error fetching data:', error);
   } finally {
