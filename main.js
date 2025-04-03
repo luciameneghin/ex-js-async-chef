@@ -5,11 +5,33 @@ async function fetchJson(url) {
 }
 
 async function getChefBirthday(id) {
-  const recipes = await fetchJson(`https://dummyjson.com/recipes/${id}`);
-  const user = await fetchJson(`https://dummyjson.com/users/${recipes.userId}`);
+
+  let recipe;
+
+  try {
+    recipe = await fetchJson(`https://dummyjson.com/recipes/${id}`);
+  } catch (error) {
+    throw new Error(`Non sono riuscito a recuperare la ricetta con id: ${id}`);
+  }
+
+  let user;
+  try {
+    user = await fetchJson(`https://dummyjson.com/users/${recipe.userId}`);
+  } catch (error) {
+    throw new Error(`Non sono riuscito a recuperare lo chef con id: ${recipe.userId}`);
+  }
+
   return { birthDate: user.birthDate };
 }
 
-getChefBirthday(1)
-  .then(birthDate => console.log(birthDate))
-  .catch(error => console.error('Error fetching data:', error));
+// Esempio di utilizzo
+(async () => {
+  try {
+    const birthDate = await getChefBirthday(1);
+    console.log(`data di nascita dello chef:`, birthDate);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  } finally {
+    console.log('Operazione completata.');
+  }
+})();
