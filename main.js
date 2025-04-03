@@ -14,6 +14,12 @@ async function getChefBirthday(id) {
     throw new Error(`Non sono riuscito a recuperare la ricetta con id: ${id}`);
   }
 
+
+  if (!recipe || !recipe.userId) {
+    throw new Error(`Ricetta non trovata con id: ${id}`);
+  }
+
+
   let user;
   try {
     user = await fetchJson(`https://dummyjson.com/users/${recipe.userId}`);
